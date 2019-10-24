@@ -1,20 +1,20 @@
 package br.com.caelum.twittelumappweb.activity
 
 import android.app.Activity
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
-import android.support.v4.content.FileProvider
-import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
+import androidx.lifecycle.ViewModelProviders
 import br.com.caelum.twittelumappweb.R
 import br.com.caelum.twittelumappweb.decodificaParaBase64
 import br.com.caelum.twittelumappweb.modelo.Tweet
@@ -134,7 +134,7 @@ class TweetActivity : AppCompatActivity() {
 
         val bitmap = BitmapFactory.decodeFile(localFoto)
 
-        val bm = Bitmap.createScaledBitmap(bitmap, bitmap.width, bitmap.height, true)
+        val bm = Bitmap.createScaledBitmap(bitmap, 300, 300, true)
 
         tweet_foto.setImageBitmap(bm)
 
