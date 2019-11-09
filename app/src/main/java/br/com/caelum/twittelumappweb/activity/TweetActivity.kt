@@ -26,7 +26,10 @@ import java.io.File
 
 class TweetActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: TweetViewModel
+    private val viewModel: TweetViewModel by lazy {
+        ViewModelProviders.of(this, ViewModelFactory).get(TweetViewModel::class.java)
+    }
+
     private var localFoto: String? = null
 
 
@@ -35,8 +38,6 @@ class TweetActivity : AppCompatActivity() {
         setContentView(R.layout.activity_tweet)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        viewModel = ViewModelProviders.of(this, ViewModelFactory).get(TweetViewModel::class.java)
 
     }
 
