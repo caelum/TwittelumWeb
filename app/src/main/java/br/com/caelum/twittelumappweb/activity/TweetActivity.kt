@@ -9,33 +9,35 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import br.com.caelum.twittelumappweb.R
+import br.com.caelum.twittelumappweb.databinding.ActivityTweetBinding
 import br.com.caelum.twittelumappweb.decodificaParaBase64
 import br.com.caelum.twittelumappweb.modelo.Tweet
 import br.com.caelum.twittelumappweb.viewmodel.TweetViewModel
 import br.com.caelum.twittelumappweb.viewmodel.ViewModelFactory
-import kotlinx.android.synthetic.main.activity_tweet.*
 import java.io.File
 
 
 class TweetActivity : AppCompatActivity() {
 
     private val viewModel: TweetViewModel by lazy {
-        ViewModelProviders.of(this, ViewModelFactory).get(TweetViewModel::class.java)
+        ViewModelProvider(this, ViewModelFactory).get(TweetViewModel::class.java)
     }
 
     private var localFoto: String? = null
 
+    lateinit var binding: ActivityTweetBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_tweet)
+        binding = ActivityTweetBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
@@ -99,11 +101,11 @@ class TweetActivity : AppCompatActivity() {
 
     fun criaTweet(): Tweet {
 
-        val campoDeMensagemDoTweet = findViewById<EditText>(R.id.tweet_mensagem)
+        val campoDeMensagemDoTweet = binding.tweetMensagem
 
         val mensagemDoTweet: String = campoDeMensagemDoTweet.text.toString()
 
-        val foto: String? = tweet_foto.tag as String?
+        val foto: String? = binding.tweetFoto.tag as String?
 
         return Tweet(mensagemDoTweet, foto)
     }
@@ -137,13 +139,13 @@ class TweetActivity : AppCompatActivity() {
 
         val bm = Bitmap.createScaledBitmap(bitmap, 300, 300, true)
 
-        tweet_foto.setImageBitmap(bm)
+        binding.tweetFoto.setImageBitmap(bm)
 
         val fotoNaBase64 = bm.decodificaParaBase64()
 
-        tweet_foto.tag = fotoNaBase64
+        binding.tweetFoto.tag = fotoNaBase64
 
-        tweet_foto.scaleType = ImageView.ScaleType.FIT_XY
+        binding.tweetFoto.scaleType = ImageView.ScaleType.FIT_XY
 
     }
 
